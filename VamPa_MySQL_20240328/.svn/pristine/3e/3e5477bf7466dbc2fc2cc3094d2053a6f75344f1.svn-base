@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.vam.mapper.AdminMapper">
+
+  	<!-- 상품 등록 -->
+  	<insert id="bookEnroll">
+  	
+  		<selectKey resultType="int" keyProperty="bookId" order="AFTER">
+  		
+  			SELECT LAST_INSERT_ID()
+  		
+  		</selectKey>		
+  	
+  		insert into vam_book(bookName, authorId, publeYear, publisher, cateCode, bookPrice, bookStock, bookDiscount, bookIntro, bookContents)
+		values(#{bookName},#{authorId}, #{publeYear},#{publisher},#{cateCode},#{bookPrice},#{bookStock},#{bookDiscount},#{bookIntro},#{bookContents})
+
+  	</insert>
+
+  	<!-- 카테고리 리스트 -->
+  	<select id="cateList" resultType="com.vam.model.CateVO">
+  	
+  		select * from vam_bcate order by catecode
+  	
+  	</select>
+  	
+	<!-- 상품 리스트 -->
+	<select id="goodsGetList" resultType="com.vam.model.BookVO">
+	
+		select  bookId, bookName,  b.authorName, c.cateName, bookStock, a.regDate
+		from vam_book a 
+		left outer join vam_author b on a.authorId = b.authorId
+		left outer join vam_bcate c on a.cateCode = c.cateCode
+		<if test="keyword != null">
+			where (bookName like concat ('%', #{keyword}, '%'))
+		</if>
+		order by bookId desc 
+		limit #{skip}, #{amount}		
+	
+	</select>
+  	
+  	<!-- 상품 총 갯수 -->
+  	<select id="goodsGetTotal" resultType="int">
+  	
+  		select count(*) from vam_book
+  		
+  		<if test="keyword != null">
+  		
+  			where bookName like concat('%' , #{keyword}, '%')
+  		
+  		</if>
+  	
+  	</select>
+  	
+ 	<!-- 상품 조회 페이지 -->
+	<select id="goodsGetDetail" resultType="com.vam.model.BookVO">
+	
+		select bookId, bookName, (select authorName from vam_author where authorId =vam_book.authorId) authorName, 
+			authorId, publeYear, publisher, cateCode, bookPrice, bookStock, bookDiscount, bookIntro, bookContents, regDate, updateDate 
+		from vam_book where bookId = #{bookId}
+	
+	</select> 	
+
+	<!-- 상품 정보 수정 -->
+	<update id="goodsModify">
+		
+		update vam_book set bookName = #{bookName}, authorId = #{authorId}, publeYear = #{publeYear}, publisher = #{publisher}, cateCode = ${cateCode}, 
+		bookPrice = #{bookPrice}, bookStock = #{bookStock}, bookDiscount = #{bookDiscount}, bookIntro = #{bookIntro}, bookContents = #{bookContents}, updateDate = now()
+		where bookId = ${bookId}
+		
+	</update>
+	
+	<!-- 상품 정보 삭제 -->
+	<delete id="goodsDelete">
+	
+		delete from vam_book where bookId = #{bookId}
+	
+	</delete>	
+	
+	<!-- 이미지 등록 -->
+	<insert id="imageEnroll">
+	
+		insert into vam_image(bookId, fileName, uploadPath, uuid) values (#{bookId}, #{fileName}, #{uploadPath}, #{uuid})
+	
+	</insert>	
+	
+	<!-- 지정 상품 이미지 전체 삭제 --> 
+	<delete id="deleteImageAll">
+	
+		delete FROM vam_image where bookId = #{bookId}
+	
+	</delete>	
+	
+	<!-- 어제자 날자 이미지 리스트 -->
+	<select id="checkFileList" resultType="com.vam.model.AttachImageVO">
+	
+		select * from vam_image where uploadpath = DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -1 DAY), '%Y\%m\%d')	
+	
+	</select>	
+	
+	<!-- 지정 상품 이미지 정보 얻기 -->
+	<select id="getAttachInfo" resultType="com.vam.model.AttachImageVO">
+	
+		select * from vam_image where bookId = #{bookId}
+	
+	</select>		
+	
+	<!-- 주문 리스트 -->
+	<select id="getOrderList" resultType="com.vam.model.OrderDTO">	
+			
+			select orderId, memberId, orderstate, orderdate
+		    from vam_order 
+		    <if test="keyword != null">
+		    	where memberId like concat('%',#{keyword}, '%')
+		    </if>
+		    order by orderdate desc
+		    limit #{skip}, #{amount}
+		    
+	</select>	
+	
+	<!-- 상품 총 개수 -->
+	<select id="getOrderTotal" resultType="int">
+	
+		select count(*) from vam_order
+		
+	    <if test="keyword != null">
+	    	where memberId like concat('%',#{keyword}, '%')
+	    </if>
+	
+	</select>
+
+	<select id="contentList" resultType="com.vam.model.ContentVO">
+		select * from contents order by contentsId
+
+	</select>
+
+	<select id="contentGetList" resultType="com.vam.model.ContentVO">
+
+		select  contentsid, code, title, pageRows, fileMaxCount, fileMaxSize, category, skinName, displayFlag, wk_1, wk_2, wk_3, wk_4, wk_5, wk_6, wk_7, wk_8, wk_9, wk_10, regDate, updDate
+		from contents
+		<if test="keyword != null">
+			where code like concat('%',#{keyword}, '%') OR title like concat('%',#{keyword}, '%')
+		</if>
+		order by contentsid desc
+		limit #{skip}, #{amount}
+
+	</select>
+
+	<select id="contentGetTotal" resultType="int">
+
+		select count(*) from contents
+
+		<if test="keyword != null">
+
+			where code like concat('%', #{keyword}, '%') OR title like concat('%',#{keyword}, '%')
+
+		</if>
+
+	</select>
+
+	<insert id="contentEnroll">
+
+		insert into contents(code, title, pageRows, fileMaxCount, fileMaxSize, category, skinName, displayFlag, wk_1, wk_2, wk_3,wk_4, wk_5, wk_6, wk_7, wk_8, wk_9, wk_10 )
+		values(#{code}, #{title}, #{pageRows}, #{fileMaxCount}, #{fileMaxSize}, #{category}, #{skinName}, #{displayFlag}, #{wk_1} , #{wk_2}, #{wk_3}, #{wk_4}, #{wk_5}, #{wk_6}, #{wk_7}, #{wk_8}, #{wk_9}, #{wk_10})
+
+	</insert>
+
+	<!-- 작가 디테일 페이지 -->
+	<select id="contentGetDetail" resultType="com.vam.model.ContentVO">
+
+		select * from contents where contentsId = #{contentId}
+
+	</select>
+
+	<update id="contentModify">
+
+		update contents set code = #{code}, title = #{title}, pageRows = #{pageRows}, fileMaxCount = #{fileMaxCount}, fileMaxSize = #{fileMaxSize}, category = #{category}, skinName = #{skinName}, displayFlag = #{displayFlag},
+		wk_1 = #{wk_1},wk_2 = #{wk_2},wk_3 = #{wk_3},wk_4 = #{wk_4},wk_5 = #{wk_5},wk_6 = #{wk_6},wk_7 = #{wk_7},wk_8 = #{wk_8},wk_9 = #{wk_9},wk_10 = #{wk_10}, updDate = now()
+		where contentsId = #{contentsId}
+
+	</update>
+
+	<delete id="contentDelete">
+		delete from contents where contentsId = #{contentId}
+	</delete>
+
+	<insert id="createMessageTable">
+		CREATE TABLE IF NOT EXISTS ${tableName} (
+									messagesId int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+									contentsId int NOT NULL,
+									subject varchar(200) NOT NULL,
+									body text NOT NULL,
+									viewCount int NOT NULL DEFAULT 0,
+									category varchar(50) ,
+									wk_1 varchar(255) ,
+									wk_2 varchar(255) ,
+									wk_3 varchar(255) ,
+									wk_4 varchar(255) ,
+									wk_5 varchar(255) ,
+									wk_6 varchar(255) ,
+									wk_7 varchar(255) ,
+									wk_8 varchar(255) ,
+									wk_9 varchar(255) ,
+									wk_10 varchar(255) ,
+									wk_11 varchar(255) ,
+									wk_12 varchar(255) ,
+									wk_13 varchar(255) ,
+									wk_14 varchar(255) ,
+									wk_15 varchar(255) ,
+									wk_16 varchar(255) ,
+									wk_17 varchar(255) ,
+									wk_18 varchar(255) ,
+									wk_19 varchar(255) ,
+									wk_20 varchar(255) ,
+									wk_21 varchar(255) ,
+									wk_22 varchar(255) ,
+									wk_23 varchar(255) ,
+									wk_24 varchar(255) ,
+									wk_25 varchar(255) ,
+									wk_26 varchar(255) ,
+									wk_27 varchar(255) ,
+									wk_28 varchar(255) ,
+									wk_29 varchar(255) ,
+									wk_30 varchar(255) ,
+									memberId varchar(50),
+									regDate timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+									updDate timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+									CONSTRAINT ${constraintName}
+									FOREIGN KEY (contentsId)
+									REFERENCES contents (contentsId)
+		);
+
+
+	</insert>
+
+	<select id="getLastInsertedId" resultType="java.lang.Integer">
+		SELECT MAX(contentsId) FROM contents;
+	</select>
+
+	<!-- 작가 목록 -->
+	<select id="messageGetList" resultType="com.vam.model.MessageVO">
+		select * from ${tableName}
+		<if test="cri.keyword != null and cri.keyword != '' ">
+			where subject like concat('%',#{cri.keyword}, '%')
+		</if>
+		order by messagesId desc
+		limit #{cri.skip}, #{cri.amount}
+	</select>
+
+	<select id="messageGetTotal" resultType="int">
+
+		select count(*) from ${tableName}
+
+		<if test="cri.keyword != null and cri.keyword != '' ">
+
+			where subject like concat('%', #{cri.keyword}, '%')
+		</if>
+
+	</select>
+	<insert id="addMessageTable">
+		insert into ${tableName}(contentsId, subject, body, category, wk_1, wk_2, wk_3,wk_4, wk_5, wk_6, wk_7, wk_8, wk_9, wk_10, wk_11, wk_12, wk_13, wk_14, wk_15, wk_16
+								 , wk_17, wk_18, wk_19, wk_20, wk_21, wk_22, wk_23, wk_24, wk_25, wk_26, wk_27, wk_28, wk_29, wk_30,memberId)
+		values(#{message.contentsId}, #{message.subject}, #{message.body}, #{message.category}, #{message.wk_1} , #{message.wk_2}, #{message.wk_3}, #{message.wk_4}, #{message.wk_5}, #{message.wk_6}, #{message.wk_7}, #{message.wk_8}, #{message.wk_9}, #{message.wk_10}
+			  , #{message.wk_11}, #{message.wk_12}, #{message.wk_13}, #{message.wk_14}, #{message.wk_15}, #{message.wk_16}, #{message.wk_17}, #{message.wk_18}, #{message.wk_19}, #{message.wk_20}
+			  , #{message.wk_21}, #{message.wk_22}, #{message.wk_23}, #{message.wk_24}, #{message.wk_25}, #{message.wk_26}, #{message.wk_27}, #{message.wk_28}, #{message.wk_29}, #{message.wk_30}, #{message.memberId});
+	</insert>
+
+	<select id="messageGetDetail" resultType="com.vam.model.MessageVO">
+
+		select * from ${tableName} where messagesId = ${messageId}
+
+	</select>
+
+	<delete id="deleteMessageTable">
+		DROP TABLE IF EXISTS ${tableName};
+	</delete>
+
+	<update id="messageModify">
+
+		update ${tableName} set subject = #{message.subject}, body = #{message.body},
+							wk_1 = #{message.wk_1},wk_2 = #{message.wk_2},wk_3 = #{message.wk_3},wk_4 = #{message.wk_4},wk_5 = #{message.wk_5},wk_6 = #{message.wk_6},wk_7 = #{message.wk_7},wk_8 = #{message.wk_8},wk_9 = #{message.wk_9},wk_10 = #{message.wk_10},
+							wk_11 = #{message.wk_11},wk_12 = #{message.wk_12},wk_13 = #{message.wk_13},wk_14 = #{message.wk_14},wk_15 = #{message.wk_15},wk_16 = #{message.wk_16},wk_17 = #{message.wk_17},wk_18 = #{message.wk_18},wk_19 = #{message.wk_19},wk_20 = #{message.wk_20},
+							wk_21 = #{message.wk_21},wk_22 = #{message.wk_22},wk_23 = #{message.wk_23},wk_24 = #{message.wk_24},wk_25 = #{message.wk_25},wk_26 = #{message.wk_26},wk_27 = #{message.wk_27},wk_28 = #{message.wk_28},wk_29 = #{message.wk_29},wk_30 = #{message.wk_30},
+							updDate = now()
+		where messagesId = #{message.messagesId}
+
+	</update>
+
+
+
+</mapper>

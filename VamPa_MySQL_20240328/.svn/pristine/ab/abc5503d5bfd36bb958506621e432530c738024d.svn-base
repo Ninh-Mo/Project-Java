@@ -1,0 +1,448 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <link rel="stylesheet" href="../resources/css/admin/messageEnroll.css">
+
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.js"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+</head>
+</head>
+<body>
+
+<%@include file="../includes/admin/header.jsp" %>
+
+<div class="admin_content_wrap">
+    <div class="admin_content_subject"><span>メッセージ情報入力</span></div>
+    <div class="admin_content_main">
+        <form action="/admin/messageEnroll.do" method="post" id="messageForm">
+    </div>
+            <input type="hidden" name="contentsId" value="${contentsId}">
+            <input type="hidden" name="tableName" value="${tableName}">
+            <input type="hidden" name="status" value="${status}">
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>コンテンツ Id</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="contentsId" class="input_block" readonly="readonly" value="${contentsId }">
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>メッセージのタイトル</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="subject">
+                    <span id="warn_subject">メッセージのタイトルを入力してください。</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>メッセージのタイトル本文</label>
+                </div>
+                <div class="form_section_content bit">
+                    <textarea name="body" id="body_textarea"></textarea>
+                    <span class="ck_warn body_warn">メッセージのタイトル本文を入力してください。</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>レコード更新ユーザID</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="memberId">
+                    <span id="warn_memberId">レコード更新ユーザIDを入力してください。</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_1</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_1">
+                    <span id="warn_wk_1">wk_1</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_2</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_2">
+                    <span id="warn_wk_2">wk_2</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_3</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_3">
+                    <span id="warn_wk_3">wk_3</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_4</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_4">
+                    <span id="warn_wk_4">wk_4</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_5</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_5">
+                    <span id="warn_wk_5">wk_5</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_6</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_6">
+                    <span id="warn_wk_6">wk_6</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_7</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_7">
+                    <span id="warn_wk_7">wk_7</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_8</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_8">
+                    <span id="warn_wk_8">wk_8</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_9</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_9">
+                    <span id="warn_wk_9">wk_9</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_10</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_10">
+                    <span id="warn_wk_10">wk_10</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_11</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_11">
+                    <span id="warn_wk_11">wk_11</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_12</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_12">
+                    <span id="warn_wk_12">wk_12</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_13</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_13">
+                    <span id="warn_wk_13">wk_13</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_14</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_14">
+                    <span id="warn_wk_14">wk_14</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_15</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_15">
+                    <span id="warn_wk_15">wk_15</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_16</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_16">
+                    <span id="warn_wk_16">wk_16</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_17</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_17">
+                    <span id="warn_wk_17">wk_17</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_18</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_18">
+                    <span id="warn_wk_18">wk_18</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_19</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_19">
+                    <span id="warn_wk_19">wk_19</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_20</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_20">
+                    <span id="warn_wk_20">wk_20</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_21</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_21">
+                    <span id="warn_wk_21">wk_21</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_22</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_22">
+                    <span id="warn_wk_22">wk_22</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_23</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_23">
+                    <span id="warn_wk_23">wk_23</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_24</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_24">
+                    <span id="warn_wk_24">wk_24</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_25</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_25">
+                    <span id="warn_wk_25">wk_25</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_26</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_26">
+                    <span id="warn_wk_26">wk_26</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_27</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_27">
+                    <span id="warn_wk_27">wk_27</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_28</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_28">
+                    <span id="warn_wk_28">wk_28</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_29</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_29">
+                    <span id="warn_wk_29">wk_29</span>
+                </div>
+            </div>
+            <div class="form_section">
+                <div class="form_section_title">
+                    <label>wk_30</label>
+                </div>
+                <div class="form_section_content">
+                    <input name="wk_30">
+                    <span id="warn_wk_30">wk_30</span>
+                </div>
+            </div>
+
+        </form>
+        <div class="btn_section">
+            <input type="hidden" name="contentsId" value="${contentsId}">
+            <input type="hidden" name="tableName" value="${tableName}">
+            <input type="hidden" name="status" value="${status}">
+            <button id="cancelBtn" class="btn">キャンセル</button>
+            <button id="messageBtn" class="btn message_btn">追加</button>
+        </div>
+    </div>
+</div>
+
+<%@include file="../includes/admin/footer.jsp" %>
+
+<script>
+
+    ClassicEditor
+        .create(document.querySelector('#body_textarea'))
+        .catch(error=>{
+            console.error(error);
+        });
+
+    /* 등록 버튼 */
+    $("#messageBtn").click(function(){
+        /* 검사 통과 유무 변수 */
+        let subjectCheck = false;			// 작가 이름
+        let bodyCheck = false;		// 소속 국가
+        let memberIdCheck = false;		// 소속 국가
+
+        /* 입력값 변수 */
+        let subject = $('input[name=subject]').val();		// 작가 이름
+        let memberId = $('input[name=memberId]').val();		// 소속 국가
+        let body = $(".bit p").html();
+        let wk_1 = $('input[name=wk_1]').val();		// 소속 국가
+        let wk_2 = $('input[name=wk_2]').val();		// 소속 국가
+        let wk_3 = $('input[name=wk_3]').val();		// 소속 국가
+        let wk_4 = $('input[name=wk_4]').val();		// 소속 국가
+        let wk_5 = $('input[name=wk_5]').val();		// 소속 국가
+        let wk_6 = $('input[name=wk_6]').val();		// 소속 국가
+        let wk_7 = $('input[name=wk_7]').val();		// 소속 국가
+        let wk_8 = $('input[name=wk_8]').val();		// 소속 국가
+        let wk_9 = $('input[name=wk_9]').val();		// 소속 국가
+        let wk_10 = $('input[name=wk_10]').val();	// 소속 국가
+        let wk_11 = $('input[name=wk_11]').val();	// 소속 국가
+        let wk_12 = $('input[name=wk_12]').val();	// 소속 국가
+        let wk_13 = $('input[name=wk_13]').val();	// 소속 국가
+        let wk_14 = $('input[name=wk_14]').val();	// 소속 국가
+        let wk_15 = $('input[name=wk_15]').val();	// 소속 국가
+        let wk_16 = $('input[name=wk_16]').val();	// 소속 국가
+        let wk_17 = $('input[name=wk_17]').val();	// 소속 국가
+        let wk_18 = $('input[name=wk_18]').val();	// 소속 국가
+        let wk_19 = $('input[name=wk_19]').val();	// 소속 국가
+        let wk_20 = $('input[name=wk_20]').val();	// 소속 국가
+        let wk_21 = $('input[name=wk_21]').val();	// 소속 국가
+        let wk_22 = $('input[name=wk_22]').val();	// 소속 국가
+        let wk_23 = $('input[name=wk_23]').val();	// 소속 국가
+        let wk_24 = $('input[name=wk_24]').val();	// 소속 국가
+        let wk_25 = $('input[name=wk_25]').val();	// 소속 국가
+        let wk_26 = $('input[name=wk_26]').val();	// 소속 국가
+        let wk_27 = $('input[name=wk_27]').val();	// 소속 국가
+        let wk_28 = $('input[name=wk_28]').val();	// 소속 국가
+        let wk_29 = $('input[name=wk_29]').val();	// 소속 국가
+        let wk_30 = $('input[name=wk_30]').val();	// 소속 국가
+
+        let wSubject = $('#warn_subject');
+        let wBody = $('.message_warn');
+        let wMemberId = $('#warn_memberId');
+
+        /* 작기 이름 공란 체크 */
+        if(subject ===''){
+            wSubject.css('display', 'block');
+            subjectCheck = false;
+        } else{
+            wSubject.css('display', 'none');
+            subjectCheck = true;
+        }
+
+        if(body !== '<br data-cke-filler="true">' ){
+            wBody.css('display','none');
+            bodyCheck = true;
+
+        } else {
+            wBody.css('display','block');
+            bodyCheck = false;
+
+        }
+
+        /* 작가 소개 공란 체크 */
+        if(memberId ===''){
+            wMemberId.css('display', 'block');
+            memberIdCheck = false;
+        } else{
+            wMemberId.css('display', 'none');
+            memberIdCheck = true;
+        }
+        /* 최종 검사 */
+        if(subjectCheck && bodyCheck && memberIdCheck){
+            $("#messageForm").submit();
+        } else{
+            return;
+        }
+
+    });
+
+    /* 취소 버튼 */
+    $("#cancelBtn").click(function(){
+        location.href="/admin/messageManage"
+    });
+
+</script>
+
+</body>
+</html>

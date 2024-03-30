@@ -1,0 +1,9 @@
+package com.vam.utils;
+
+public class Constant {
+    public static final String BASE_PACKAGE = "com.vam.skin";
+    public static final String CODE_PARTTERN = "^(?=.*[a-zA-Z]).+$";
+    public static final String CODE_PARTTERN2 = "^[a-zA-Z0-9_]+$";
+
+
+}
